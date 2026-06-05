@@ -7,8 +7,8 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, Form, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
+ 
 
-# Local imports
 from .intents import INTENT_REPLIES
 from .schemas import IntentRequest, FeedbackRequest
 from . import database 
@@ -20,7 +20,6 @@ ChatId = os.getenv("TELEGRAM_CHAT_ID")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Run database synchronization on application startup
     database.init_db()
     yield
 
@@ -34,7 +33,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- Endpoints ---
 
 @app.post("/api/intent")
 async def match_intent(req: IntentRequest):

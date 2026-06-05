@@ -2,7 +2,7 @@
 import chromadb
 from .intents import INTENT_PHRASES
 
-# Initialize Chroma client globally
+
 chroma_client = chromadb.PersistentClient(path="./chroma_db")
 collection = chroma_client.get_or_create_collection(name="portfolio_intents")
 
