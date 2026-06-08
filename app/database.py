@@ -30,4 +30,4 @@ def init_db():
         collection.add(documents=docs, metadatas=metas, ids=ids)
         print("✅ ChromaDB intents synced successfully.")
     else:
-        print("✅ ChromaDB database is already up to date.")
+        print("✅ ChromaDB database is already up to date. ok")
