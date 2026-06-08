@@ -1,10 +1,16 @@
-fastapi==0.111.0
-uvicorn==0.30.1
-pydantic==2.7.4
-pydantic-settings==2.3.4
-email-validator==2.1.0
-chromadb==0.5.0
-sentence-transformers==3.0.1
-httpx==0.27.0
-python-multipart==0.0.9
-python-dotenv==1.0.0
+# Web Framework & Server
+fastapi>=0.110.0
+uvicorn>=0.29.0
+python-multipart>=0.0.9  # Required for FastAPI Form() and File()
+
+# Data Validation
+pydantic>=2.6.0
+pydantic-settings>=2.2.0
+pydantic[email]>=2.6.0   # Required for EmailStr in schemas.py
+
+# Vector Database
+chromadb>=0.4.24
+
+# Utilities
+httpx>=0.27.0
+python-dotenv>=1.0.1
