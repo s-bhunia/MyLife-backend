@@ -36,19 +36,19 @@ app.add_middleware(
 
 @app.post("/api/intent")
 async def match_intent(req: IntentRequest):
-    """Matches user text to navigation actions or chat conversations using semantic vector search."""
-    results = database.collection.query(query_texts=[req.text], n_results=1)
+    # Uses the zero-RAM python matcher
+    action = database.match_intent_pure_python(req.text)
     
-    if not results["distances"][0] or results["distances"][0][0] > 1.2:
+    if action == "UNKNOWN":
         return {
-            "action": "UNKNOWN", 
-            "reply": "I'm not completely sure what you mean. Try asking to see my projects, skills, or bookshelf!"
+            "action": "UNKNOWN",
+            "reply": "I'm not completely sure what you mean, but feel free to explore the space!"
         }
-    
-    action = results["metadatas"][0][0]["action"]
-    reply_text = INTENT_REPLIES.get(action, "Got it.")
-    
-    return {"action": action, "reply": reply_text}
+        
+    return {
+        "action": action,
+        "reply": INTENT_REPLIES.get(action, "Navigating...")
+    }
 
 
 @app.post("/api/feedback/text")
