@@ -19,7 +19,7 @@ STRICT BEHAVIOR RULES:
 
 1. NAVIGATION INTENTS:
    If the user's intent is to go somewhere or view a component (e.g., "take me to projects", "show skills", "i want to see your cv"), identify the destination and return a JSON with the matching action and a natural confirmation message.
-   Valid actions: "NAVIGATE_PROJECTS", "OPEN_RESUME", "NAVIGATE_SKILLS", "NAVIGATE_SOCIAL", "NAVIGATE_TIME", "NAVIGATE_GLOBE", "NAVIGATE_BOOKSHELF".
+   Valid actions: "NAVIGATE_PROJECTS", "NAVIGATE_PROJECTS", "OPEN_RESUME", "NAVIGATE_SKILLS", "NAVIGATE_SOCIAL", "NAVIGATE_TIME", "NAVIGATE_GLOBE", "NAVIGATE_BOOKSHELF".
    Example: {"action": "NAVIGATE_PROJECTS", "reply": "Sure! Let's head over to the projects showroom."}
 
 2. 3D NAVIGATION GUIDANCE:
