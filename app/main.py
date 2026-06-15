@@ -2,16 +2,17 @@
 import os
 import httpx
 from datetime import datetime
+import asyncio
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 from fastapi import FastAPI, Form, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
- 
 
 from .intents import INTENT_REPLIES
 from .schemas import IntentRequest, FeedbackRequest
 from . import database 
+from .gemini_service import get_gemini_intent  # <-- Import the new Gemini handler
 
 load_dotenv()
 
@@ -36,7 +37,16 @@ app.add_middleware(
 
 @app.post("/api/intent")
 async def match_intent(req: IntentRequest):
-    # Uses the zero-RAM python matcher
+    gemini_response = None
+    try:
+        gemini_response = await asyncio.wait_for(get_gemini_intent(req.text), timeout=5.0)
+    except asyncio.TimeoutError:
+        print("Gemini intent matching timed out after 5 seconds.")
+    
+    if gemini_response and "action" in gemini_response and "reply" in gemini_response:
+        return gemini_response
+        
+    print("Falling back to local Python intent matcher...")
     action = database.match_intent_pure_python(req.text)
     
     if action == "UNKNOWN":
